@@ -1,0 +1,73 @@
+{
+    "name": "@upradata/stream-html",
+    "author": {
+        "name": "Thomas Milotti (Upra-Data)",
+        "email": "thomas.milotti@gmail.com",
+        "url": "https://github.com/upradata"
+    },
+    "repository": {
+        "url": "https://github.com/upradata/stream-html.git"
+    },
+    "license": "MIT",
+    "version": "1.0.25",
+    "description": "Stream html functionalities",
+    "sideEffects": false,
+    "main": "lib",
+    "types": "lib-esm",
+    "module": "lib-esm",
+    "files": [
+        "lib",
+        "lib-esm"
+    ],
+    "esm": {
+        "mainFields": [
+            "module",
+            "main"
+        ]
+    },
+    "scripts": {
+        "clean": "shx rm -rf lib lib-esm",
+        "pre:build": "npm run clean",
+        "build": "concurrently 'tsc -p tsconfig.lib.json' 'tsc -p tsconfig.lib-esm.json' && pnpm run copy:declaration",
+        "post:build": "npm run test && npm run e2e",
+        "copy:declaration": "cp src/@types/webpack.d.ts lib/@types && cp src/@types/webpack.d.ts lib-esm/@types",
+        "watch": "pnpm run build:watch",
+        "build:watch": "concurrently 'tsc -p tsconfig.lib.json -w' 'tsc -p tsconfig.lib-esm.json -w'",
+        "test": "npx jest --verbose false --config jest-ut.config.js",
+        "e2e": "npx jest --passWithNoTests --verbose false --config jest-e2e.config.js",
+        "github-push": "npm version patch && git pushall && git pushall-tags",
+        "npm-publish": "npm run build && npm publish --access public"
+    },
+    "dependencies": {
+        "jsdom": "^17.0.0",
+        "plugin-error": "^1.0.1",
+        "through2": "^4.0.2",
+        "vinyl": "^2.2.1"
+    },
+    "devDependencies": {
+        "@types/node": "^16.6.1",
+        "@types/through2": "^2.0.36",
+        "@types/vinyl": "^2.0.5",
+        "concurrently": "^6.2.1",
+        "jest": "^27.0.6",
+        "shx": "^0.3.3",
+        "typescript": "^4.3.5"
+    },
+    "keywords": [
+        "stream",
+        "html",
+        "util"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "local": {
+        "dependencies": {
+            "@upradata/util": "link:/home/milottit/Libraries/Upra-Data/util@13.0.1",
+            "@upradata/node-util": "link:/home/milottit/Libraries/Upra-Data/node-util@14.0.2"
+        },
+        "usedBy": {
+            "@upradata/tilda-tools": "/home/milottit/Libraries/Tilda/tools"
+        }
+    }
+}
