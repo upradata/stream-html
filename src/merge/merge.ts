@@ -8,7 +8,7 @@ import { MergeFile } from './merge-file';
 import { MergeOptions } from './merge.options';
 
 
-class Merge {
+class MergeTransform {
     public pluginName = this.constructor.name;
     public options: MergeOptions;
     private mergeFiles: ObjectOf<MergeFile> = {};
@@ -18,7 +18,7 @@ class Merge {
     }
 
 
-    run(): stream.Transform {
+    create(): stream.Transform {
         const throughOptions = { objectMode: true };
         const self = this;
 
@@ -70,6 +70,6 @@ class Merge {
 }
 
 
-export function merge(options?: Partial<MergeOptions>) {
-    return new Merge(options).run();
+export function mergeTransform(options?: Partial<MergeOptions>) {
+    return new MergeTransform(options).create();
 }

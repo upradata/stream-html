@@ -16,7 +16,7 @@ export class RemoveTagOptions {
 }
 
 
-class RemoveTag {
+class RemoveTagTransform {
     public pluginName = this.constructor.name;
     public options: RemoveTagOptions;
 
@@ -25,7 +25,7 @@ class RemoveTag {
     }
 
 
-    run(options?: Partial<RemoveTagOptions>): stream.Transform {
+    create(options?: Partial<RemoveTagOptions>): stream.Transform {
         const opts = Object.assign(this.options, options);
 
         const throughOptions = { objectMode: true };
@@ -72,6 +72,6 @@ class RemoveTag {
 }
 
 
-export function removeTag(options?: Partial<RemoveTagOptions>) {
-    return new RemoveTag(options).run();
+export function removeTagTransform(options?: Partial<RemoveTagOptions>) {
+    return new RemoveTagTransform(options).create();
 }

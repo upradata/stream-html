@@ -23,7 +23,7 @@ export class ExtractTagOptions {
     };
 }
 
-class ExtractTag {
+class ExtractTagTransform {
 
     public pluginName = this.constructor.name;
     public options: ExtractTagOptions;
@@ -32,7 +32,7 @@ class ExtractTag {
         this.options = Object.assign(new ExtractTagOptions(), options);
     }
 
-    run() {
+    create() {
         const throughOptions = { objectMode: true };
         const self = this;
 
@@ -79,6 +79,6 @@ class ExtractTag {
 }
 
 
-export function extractTag(options?: Partial<ExtractTagOptions>) {
-    return new ExtractTag(options).run();
+export function extractTagTransform(options?: Partial<ExtractTagOptions>) {
+    return new ExtractTagTransform(options).create();
 }
